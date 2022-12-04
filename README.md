@@ -1,4 +1,4 @@
-#blog
+# blog
 
 it's a project for add or edit posts and add reactions on it this project made with reacjs , redux , tailwindcss , date-fns , react-router , axios .
 # Getting Started with Create React App
