@@ -1,39 +1,38 @@
-import { useSelector } from "react-redux";
-import { selectPostById } from "./postSlice";
+import { useSelector } from 'react-redux'
+import { selectPostById } from './postsSlice'
+
 import PostAuthor from "./PostAuthor";
 import TimeAgo from "./TimeAgo";
 import ReactionButtons from "./ReactionButtons";
-import { useParams, Link } from "react-router-dom";
+
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const SinglePostPage = () => {
-  const { postId } = useParams();
+    const { postId } = useParams()
 
-  const post = useSelector((state) => selectPostById(state, Number(postId)));
+    const post = useSelector((state) => selectPostById(state, Number(postId)))
 
-  if (!post) {
+    if (!post) {
+        return (
+            <section>
+                <h2>Post not found!</h2>
+            </section>
+        )
+    }
+
     return (
-      <section>
-        <h2>Post not found!</h2>
-      </section>
-    );
-  }
+        <article>
+            <h2>{post.title}</h2>
+            <p>{post.body}</p>
+            <p className="postCredit">
+                <Link to={`/post/edit/${post.id}`}>Edit Post</Link>
+                <PostAuthor userId={post.userId} />
+                <TimeAgo timestamp={post.date} />
+            </p>
+            <ReactionButtons post={post} />
+        </article>
+    )
+}
 
-  return (
-    <article>
-      <h3>{post.title}</h3>
-      <p>{post.body.substring(0, 100)}</p>
-      <p className="postCredit">
-        <Link
-          className="mr-2 border-2 border-yellow-200 rounded-lg p-1 text-yellow-200"
-          to={`/post/edit/${post.id}`}>
-          Edit Post
-        </Link>
-        <PostAuthor userId={post.userId} />
-        <TimeAgo timestamp={post.date} />
-      </p>
-      <ReactionButtons post={post} />
-    </article>
-  );
-};
-
-export default SinglePostPage;
+export default SinglePostPage
